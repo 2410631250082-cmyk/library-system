@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
@@ -10,9 +11,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Halaman login (hanya untuk yang belum login)
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+});
+
+// Logout (hanya untuk yang sudah login)
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
+
 Route::get('/dashboard', [DashboardController::class, 'index']);
 
-Route::resource('books', BookController::class);
+// Halaman buku dilindungi middleware auth
+Route::middleware('auth')->group(function () {
+    Route::resource('books', BookController::class);
+});
 
 Route::get('/categories', [CategoryController::class, 'index']);
 
