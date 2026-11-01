@@ -9,17 +9,41 @@
         @csrf
         @method('PUT')
 
-        <label>Judul:</label><br>
-        <input type="text" name="title" value="{{ $book->title }}"><br><br>
+        <div>
+            <label>Judul:</label><br>
+            <input type="text" name="title" value="{{ old('title', $book->title) }}">
+            @error('title')
+                <p style="color:red;">{{ $message }}</p>
+            @enderror
+        </div>
+        <br>
 
-        <label>Penulis:</label><br>
-        <input type="text" name="author" value="{{ $book->author }}"><br><br>
+        <div>
+            <label>Penulis:</label><br>
+            <input type="text" name="author" value="{{ old('author', $book->author) }}">
+            @error('author')
+                <p style="color:red;">{{ $message }}</p>
+            @enderror
+        </div>
+        <br>
 
-        <label>Tahun Terbit:</label><br>
-        <input type="number" name="year" value="{{ $book->year }}"><br><br>
+        <div>
+            <label>Tahun Terbit:</label><br>
+            <input type="text" name="year" value="{{ old('year', $book->year) }}">
+            @error('year')
+                <p style="color:red;">{{ $message }}</p>
+            @enderror
+        </div>
+        <br>
 
-        <label>Stok:</label><br>
-        <input type="number" name="stock" value="{{ $book->stock }}"><br><br>
+        <div>
+            <label>Stok:</label><br>
+            <input type="text" name="stock" value="{{ old('stock', $book->stock) }}">
+            @error('stock')
+                <p style="color:red;">{{ $message }}</p>
+            @enderror
+        </div>
+        <br>
 
         <button type="submit">Update</button>
     </form>
